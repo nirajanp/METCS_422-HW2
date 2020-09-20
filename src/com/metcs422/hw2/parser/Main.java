@@ -19,14 +19,14 @@ public class Main {
 	// Executes two static method to merge file and extract information from
 	// newely created merged file. 
 	public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException {
+	
 		MergeFile.mergeFile();
 		Parse.parse();
-
-	}
-
 		
-	
-
+		
+		
+		
+	}
 }
 
 

@@ -12,6 +12,9 @@ import java.io.PrintWriter;
 
 public class MergeFile {
 	
+	public MergeFile() {
+	}
+	
 	@SuppressWarnings("resource")
 	public static void mergeFile() throws IOException {
 		// PrintWriter object lets you write in filesCopy.xml
@@ -20,7 +23,8 @@ public class MergeFile {
 		// opening the root tag of filesCopy.xml file.
 		pw.println("<PubmedArticleSet>");
 
-		// BufferReader object for 1st xml file that needs to be read  
+		// BufferReader object for 1st xml file that needs to be read. 
+		// FileReader makes it possible to read the contents of a file
 		BufferedReader br = new BufferedReader(new FileReader("pubmed20n1020.xml"));
 
 		String line = br.readLine();
