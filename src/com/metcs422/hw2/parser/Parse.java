@@ -7,6 +7,7 @@ package com.metcs422.hw2.parser;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -25,28 +26,11 @@ public class Parse {
 	public Parse () {
 	}
 	
-	private static ArrayList<String> searchList = new ArrayList<String>();
+	// Creates an ArrayList of type Data.
+	static ArrayList<Data> dataLog = new ArrayList<>();
 	
-	private static LocalTime time = LocalTime.now();
-	
-		
-	public static LocalTime getTime() {
-		return time;
-	}
-
-
-	public static void setTime(LocalTime time) {
-		Parse.time = time;
-	}
-
-
-	public static ArrayList<String> getSearchList() {
-		return Parse.searchList;
-	}
-
-
-	public static void setSearchList(ArrayList<String> searchList) {
-		Parse.searchList = searchList;
+	public static ArrayList<Data> getDataLog() {
+		return dataLog;
 	}
 	
 	public static void parse() throws ParserConfigurationException, SAXException, IOException {
@@ -84,9 +68,7 @@ public class Parse {
 		// NodeList object called yearList.
 		NodeList yearList = doc.getElementsByTagName("Year");
 
-		// It creates an array of Abstract element and record it in
-		// NodeList object called abstractText.
-		NodeList abstractText = doc.getElementsByTagName("Abstract");
+		
 		
 		
 		Scanner sc = new Scanner(System.in);
@@ -95,8 +77,19 @@ public class Parse {
 		
 		
 		while (userChoice.equalsIgnoreCase("Y")) {
-			System.out.println("Enter keyword you want to search: ");
+			// LocalTime is an immutable date-time object that represents time. 
+			// now() is a static method of LocalTime class which obtains the
+			// current time from the system clock in the default time-zone.
+			LocalTime currentTime = LocalTime.now();
+			
+			System.out.print("Enter keyword you want to search: ");
+			// this gets the input of search keyword from the user.
 			search = sc.next();
+			
+			// Initialized Data class constructor, which takes keyword
+			// user searched and time when it was searched.
+			Data data = new Data(search, currentTime);
+			
 		// This for loop is iterating through as many abstractText 
 		// element as there are in the filesCopy.xml 
 				for (int itr = 0; itr<articleTitle.getLength(); itr++) {
@@ -108,7 +101,7 @@ public class Parse {
 					// instances of Node i.e. year and abstractTextt
 					Node artiTitle = articleTitle.item(itr);
 					Node year = yearList.item(itr);
-					Node abstractTextt = abstractText.item(itr);
+					
 
 					
 					
@@ -123,17 +116,29 @@ public class Parse {
 						System.out.println("Year : " + year.getTextContent());
 					}
 				}
-		
+		// Asking user for more information if they would like to 
+		// continue or not. 
 		System.out.println("\nWould you like to make ANOTHER SEARCH?");
 		System.out.println("YES: Enter " + " \"Y\" " + "OR" + " \"y\"");
 		
 		System.out.println("NO: Enter anyword.");
-		System.out.println("Words you searched initially");
-		System.out.print(search + Parse.getSearchList());
-		System.out.println("Local Time " + Parse.getTime());
-		userChoice = sc.next();
-		searchList.add(search);
+		System.out.println("------------------------");
+		System.out.print("ANOTHER SEARCH: 'Y' OR 'N': ");
 		
+		// This gets the input of user choice from the user,
+		// if they want to continue of stop searching
+		userChoice = sc.next();
+		
+		
+		System.out.println("Words you searched previously");
+		
+		// dataLog is an instance of ArrayList which is refering to
+		// the Data. This line adds each search entered by user and 
+		// time stamp to the ArrayList.
+		dataLog.add(data);
+		
+		// Printing out the output.
+		System.out.println(getDataLog() + "\n");
 		
 		}
 		
