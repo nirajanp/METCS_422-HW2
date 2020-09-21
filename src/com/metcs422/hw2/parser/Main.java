@@ -3,7 +3,7 @@ package com.metcs422.hw2.parser;
 // Author   : Nirajan Pandey									    //
 // Prof.    : Reza Rawassizadeh									    //
 // TA	    : Dakshin Jawahar										//		
-// Deadline : Wednesday, Sept 16th									//
+// Deadline : Tuesday, Sept 22nd									//
 //																	//
 //  This is main class where all the execution of merging and 	    //
 //  extracting the data from merged file happens.				    //
@@ -22,10 +22,6 @@ public class Main {
 	
 		MergeFile.mergeFile();
 		Parse.parse();
-		
-		
-		
-		
 	}
 }
 
