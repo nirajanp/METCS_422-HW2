@@ -143,10 +143,6 @@ public class Parse {
 		}
 		
 		System.out.println("Thank you!!");
-		
-		
-		
-		
 	}
 
 }

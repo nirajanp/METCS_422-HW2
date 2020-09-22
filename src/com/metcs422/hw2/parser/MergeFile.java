@@ -11,6 +11,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 public class MergeFile {
+	private static String line = null;
+
+	private static PrintWriter pw = null;
+	
+	private static BufferedReader br = null;
 	
 	public MergeFile() {
 	}
@@ -18,19 +23,49 @@ public class MergeFile {
 	@SuppressWarnings("resource")
 	public static void mergeFile() throws IOException {
 		// PrintWriter object lets you write in filesCopy.xml
-		PrintWriter pw = new PrintWriter("filesCopy.xml");
+		pw = new PrintWriter("filesCopy.xml");
 
 		// opening the root tag of filesCopy.xml file.
 		pw.println("<PubmedArticleSet>");
 
 		// BufferReader object for 1st xml file that needs to be read. 
 		// FileReader makes it possible to read the contents of a file
-		BufferedReader br = new BufferedReader(new FileReader("pubmed20n1020.xml"));
+		br = new BufferedReader(new FileReader("pubmed20n1020.xml"));
 
-		String line = br.readLine();
+		line = br.readLine();
 
 		// loop to copy each line of pubmed20n1020.xml to 
 		// filesCopy.xml
+		loop();
+		
+		// BufferedReader object for 2nd xml file that needs to be read
+		br = new BufferedReader (new FileReader ("pubmed20n1023.xml"));
+		line = br.readLine();
+
+		// loop to copy each line of pubmed20n1023.xml to
+		// filesCopy.xml
+		loop();
+
+		// BufferedReader object for 3rd file that needs to be read
+		br = new BufferedReader (new FileReader ("pubmed20n1032.xml"));
+		line = br.readLine();
+
+		// loop to copy each line of pubmed20n1032.xml to
+		// filesCopy.xml
+		loop();
+
+		// closing the root tag of files.xml file
+		pw.println("</PubmedArticleSet>");
+		pw.flush();
+		// closing resources
+		br.close();
+		pw.close();
+
+		System.out.println("Merged.");
+
+	}
+	
+	private static void loop () throws IOException {
 		while (line != null) {
 			if (!line.equals("<PubmedArticleSet>") && !line.equals("</PubmedArticleSet>")
 					&& !line.contains("<?") && !line.contains("<!")) {
@@ -43,45 +78,6 @@ public class MergeFile {
 			// and assigning the value read to the line variable. 
 			line = br.readLine();	
 		}
-
-
-		// BufferedReader object for 2nd xml file that needs to be read
-		br = new BufferedReader (new FileReader ("pubmed20n1023.xml"));
-		line = br.readLine();
-
-		// loop to copy each line of pubmed20n1023.xml to
-		// filesCopy.xml
-		while (line != null ) {
-			if (!line.equals("<PubmedArticleSet>") && !line.equals("</PubmedArticleSet>")
-					&& !line.contains("<?") && !line.contains("<!")) {
-				pw.println(line);
-			}
-			line = br.readLine();
-		}
-
-		// BufferedReader object for 3rd file that needs to be read
-		br = new BufferedReader (new FileReader ("pubmed20n1032.xml"));
-		line = br.readLine();
-
-		// loop to copy each line of pubmed20n1032.xml to
-		// filesCopy.xml
-		while (line != null) {
-			if (!line.equals("<PubmedArticleSet>") && !line.equals("</PubmedArticleSet>")
-					&& !line.contains("<?") && !line.contains("<!")) {
-				pw.println(line);
-			}
-			line = br.readLine();
-		}
-
-		// closing the root tag of files.xml file
-		pw.println("</PubmedArticleSet>");
-		pw.flush();
-		// closing resources
-		br.close();
-		pw.close();
-
-		System.out.println("Merged.");
-
 	}
 
 
